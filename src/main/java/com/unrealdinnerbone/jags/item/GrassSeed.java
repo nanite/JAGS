@@ -10,7 +10,7 @@ import net.minecraftforge.common.Tags;
 public class GrassSeed extends Item {
 
     public GrassSeed() {
-        super(new Item.Properties().tab(ItemGroup.TAB_FOOD));
+        super(new Item.Properties().tab(ItemGroup.TAB_MISC));
     }
 
     @Override

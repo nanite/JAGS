@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[36,)"
-license = "All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks"
+license = "I"
 [[mods]]
 modId = "jags"
 version = "${version}"
