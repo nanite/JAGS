@@ -3,6 +3,6 @@ loaderVersion = "[36,)"
 license = "I"
 [[mods]]
 modId = "jags"
-version = "${version}"
+version = "${file.jarVersion}"
 displayName = "JAGS"
 description = "adds a grass seed"

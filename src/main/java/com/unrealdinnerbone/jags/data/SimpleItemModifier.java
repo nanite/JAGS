@@ -1,11 +1,11 @@
 package com.unrealdinnerbone.jags.data;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -16,7 +16,8 @@ public class SimpleItemModifier extends LootModifier {
 
     private final ItemStack stack;
 
-    protected SimpleItemModifier(ILootCondition[] conditionsIn, ItemStack itemStack) {
+
+    public SimpleItemModifier(LootItemCondition[] conditionsIn, ItemStack itemStack) {
         super(conditionsIn);
         this.stack = itemStack;
     }
@@ -34,8 +35,8 @@ public class SimpleItemModifier extends LootModifier {
 
     public static class Serializer extends GlobalLootModifierSerializer<SimpleItemModifier> {
         @Override
-        public SimpleItemModifier read(ResourceLocation location, JsonObject object, ILootCondition[] conditions) {
-            return new SimpleItemModifier(conditions, new ItemStack(JSONUtils.getAsItem(object, "item")));
+        public SimpleItemModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] conditions) {
+            return new SimpleItemModifier(conditions, new ItemStack(GsonHelper.getAsItem(object, "item")));
 
         }
 

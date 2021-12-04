@@ -1,34 +1,33 @@
 package com.unrealdinnerbone.jags.item;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 
 public class GrassSeed extends Item {
 
     public GrassSeed() {
-        super(new Item.Properties().tab(ItemGroup.TAB_MISC));
+        super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
         if(blockState.is(Tags.Blocks.DIRT) && blockState.getBlock() != Blocks.GRASS_BLOCK) {
             context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.GRASS_BLOCK.defaultBlockState());
             context.getPlayer().playSound(SoundEvents.GRASS_PLACE, 1, 1);
-            if (!context.getPlayer().abilities.instabuild) {
+            if (!context.getPlayer().getAbilities().instabuild) {
                 context.getItemInHand().shrink(1);
             }
-            return ActionResultType.sidedSuccess(context.getLevel().isClientSide());
+
+            return InteractionResult.sidedSuccess(context.getLevel().isClientSide());
         }else {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
 
