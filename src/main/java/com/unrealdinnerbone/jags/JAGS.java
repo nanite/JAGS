@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.fml.common.Mod;
@@ -40,7 +39,7 @@ public class JAGS {
         event.getGenerator().addProvider(new BlockTagsProvider(event.getGenerator(), MOD_ID, event.getExistingFileHelper()) {
             @Override
             protected void addTags() {
-                this.tag(DIRT).add(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT);
+                this.tag(DIRT).addTag(BlockTags.DIRT);
             }
         });
     }
