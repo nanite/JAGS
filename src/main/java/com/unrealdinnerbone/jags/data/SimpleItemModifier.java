@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.jags.data;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -8,9 +9,9 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class SimpleItemModifier extends LootModifier {
 
@@ -28,7 +29,7 @@ public class SimpleItemModifier extends LootModifier {
 
     @Nonnull
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         generatedLoot.add(stack.copy());
         return generatedLoot;
     }
@@ -43,7 +44,8 @@ public class SimpleItemModifier extends LootModifier {
         @Override
         public JsonObject write(SimpleItemModifier instance) {
             JsonObject jsonObject = makeConditions(instance.conditions);
-            jsonObject.addProperty("item", instance.getStack().getItem().getRegistryName().toString());
+            ResourceLocation location = ForgeRegistries.ITEMS.getKey(instance.getStack().getItem());
+            jsonObject.addProperty("item", location.toString());
             return jsonObject;
         }
 
