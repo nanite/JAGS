@@ -1,5 +1,5 @@
 {
-  "type": "jags:simple",
+  "type": "jags:wheat_harvest",
   "conditions": [
     {
       "chance": 0.1,
@@ -10,5 +10,8 @@
       "loot_table_id": "minecraft:blocks/grass"
     }
   ],
-  "item": "jags:jags"
+  "stack": {
+    "Count": 1,
+    "id": "jags:jags"
+  }
 }

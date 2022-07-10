@@ -17,7 +17,7 @@ public class LootModifierGenerator extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("grass_seed", JAGS.SIMPLE_LOOT_MODIFIER.get(), new SimpleItemModifier(
+        add("grass_seed", new SimpleItemModifier(
                 createChanceCondition(0.1f, new ResourceLocation("minecraft", "blocks/grass")), new ItemStack(JAGS.ITEM.get())));
     }
 

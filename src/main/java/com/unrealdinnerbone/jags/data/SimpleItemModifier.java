@@ -1,19 +1,23 @@
 package com.unrealdinnerbone.jags.data;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
 public class SimpleItemModifier extends LootModifier {
+
+
+    public static final Codec<SimpleItemModifier> CODEC = RecordCodecBuilder.create(inst ->
+            codecStart(inst)
+                    .and(ItemStack.CODEC.fieldOf("stack").forGetter(SimpleItemModifier::getStack))
+                    .apply(inst, SimpleItemModifier::new));
 
     private final ItemStack stack;
 
@@ -34,20 +38,8 @@ public class SimpleItemModifier extends LootModifier {
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<SimpleItemModifier> {
-        @Override
-        public SimpleItemModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] conditions) {
-            return new SimpleItemModifier(conditions, new ItemStack(GsonHelper.getAsItem(object, "item")));
-
-        }
-
-        @Override
-        public JsonObject write(SimpleItemModifier instance) {
-            JsonObject jsonObject = makeConditions(instance.conditions);
-            ResourceLocation location = ForgeRegistries.ITEMS.getKey(instance.getStack().getItem());
-            jsonObject.addProperty("item", location.toString());
-            return jsonObject;
-        }
-
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC;
     }
 }
