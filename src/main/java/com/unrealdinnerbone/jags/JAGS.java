@@ -22,8 +22,7 @@ public class JAGS {
     public static final String MOD_ID = "jags";
 
     public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get(), JAGS.MOD_ID);
+    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, JAGS.MOD_ID);
     public static final RegistryObject<SimpleItemModifier.Serializer> SIMPLE_LOOT_MODIFIER  = LOOT_MODIFIERS.register("simple", SimpleItemModifier.Serializer::new);
     public static final RegistryObject<GrassSeed> ITEM = ITEMS.register(MOD_ID, GrassSeed::new);
     public static final TagKey<Block> DIRT = BlockTags.create(new ResourceLocation(MOD_ID, "dirt"));
