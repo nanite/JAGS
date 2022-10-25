@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "use_seed": {
+      "conditions": {},
+      "trigger": "jags:jags"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.jags.root.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "jags:jags"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.jags.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "use_seed"
+    ]
+  ]
+}
