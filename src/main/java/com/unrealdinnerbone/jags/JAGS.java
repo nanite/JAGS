@@ -1,8 +1,11 @@
 package com.unrealdinnerbone.jags;
 
+import com.unrealdinnerbone.jags.data.AdvancementDataProvider;
 import com.unrealdinnerbone.jags.data.LootModifierGenerator;
+import com.unrealdinnerbone.jags.data.SeedTrigger;
 import com.unrealdinnerbone.jags.data.SimpleItemModifier;
 import com.unrealdinnerbone.jags.item.GrassSeed;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -30,11 +33,14 @@ public class JAGS {
     public JAGS() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(JAGS::onData);
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        CriteriaTriggers.register(SeedTrigger.INSTANCE);
         LOOT_MODIFIERS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void onData(GatherDataEvent event) {
         event.getGenerator().addProvider(new LootModifierGenerator(event.getGenerator()));
+        event.getGenerator().addProvider(new AdvancementDataProvider(event.getGenerator(), event.getExistingFileHelper()));
+
         event.getGenerator().addProvider(new BlockTagsProvider(event.getGenerator(), MOD_ID, event.getExistingFileHelper()) {
             @Override
             protected void addTags() {

@@ -1,6 +1,8 @@
 package com.unrealdinnerbone.jags.item;
 
 import com.unrealdinnerbone.jags.JAGS;
+import com.unrealdinnerbone.jags.data.SeedTrigger;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTab;
@@ -24,7 +26,9 @@ public class GrassSeed extends Item {
             if (!context.getPlayer().getAbilities().instabuild) {
                 context.getItemInHand().shrink(1);
             }
-
+            if(context.getPlayer() instanceof ServerPlayer player) {
+                SeedTrigger.INSTANCE.trigger(player);
+            }
             return InteractionResult.sidedSuccess(context.getLevel().isClientSide());
         }else {
             return InteractionResult.PASS;
