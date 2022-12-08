@@ -1,21 +1,27 @@
 package com.unrealdinnerbone.jags;
 
+import com.mojang.serialization.Codec;
 import com.unrealdinnerbone.jags.data.AdvancementDataProvider;
 import com.unrealdinnerbone.jags.data.LootModifierGenerator;
 import com.unrealdinnerbone.jags.data.SeedTrigger;
 import com.unrealdinnerbone.jags.data.SimpleItemModifier;
 import com.unrealdinnerbone.jags.item.GrassSeed;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.data.BlockTagsProvider;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -25,8 +31,8 @@ public class JAGS {
     public static final String MOD_ID = "jags";
 
     public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, JAGS.MOD_ID);
-    public static final RegistryObject<SimpleItemModifier.Serializer> SIMPLE_LOOT_MODIFIER  = LOOT_MODIFIERS.register("simple", SimpleItemModifier.Serializer::new);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, JAGS.MOD_ID);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> SIMPLE_LOOT_MODIFIER  = LOOT_MODIFIERS.register("simple", () -> SimpleItemModifier.CODEC);
     public static final RegistryObject<GrassSeed> ITEM = ITEMS.register(MOD_ID, GrassSeed::new);
     public static final TagKey<Block> DIRT = BlockTags.create(new ResourceLocation(MOD_ID, "dirt"));
 
@@ -35,17 +41,25 @@ public class JAGS {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         CriteriaTriggers.register(SeedTrigger.INSTANCE);
         LOOT_MODIFIERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(JAGS::itemGroupEvent);
+    }
+
+    public static void itemGroupEvent(CreativeModeTabEvent.BuildContents event) {
+        event.registerSimple(CreativeModeTabs.NATURAL_BLOCKS, ITEM.get());
+        event.registerSimple(CreativeModeTabs.SEARCH, ITEM.get());
     }
 
     public static void onData(GatherDataEvent event) {
-        event.getGenerator().addProvider(new LootModifierGenerator(event.getGenerator()));
-        event.getGenerator().addProvider(new AdvancementDataProvider(event.getGenerator(), event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new LootModifierGenerator(event.getGenerator()));
+        event.getGenerator().addProvider(true, new AdvancementDataProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
 
-        event.getGenerator().addProvider(new BlockTagsProvider(event.getGenerator(), MOD_ID, event.getExistingFileHelper()) {
+        event.getGenerator().addProvider(true, new BlockTagsProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(), JAGS.MOD_ID, event.getExistingFileHelper()) {
             @Override
-            protected void addTags() {
+            protected void addTags(HolderLookup.Provider provider) {
                 this.tag(DIRT).addTag(BlockTags.DIRT);
             }
         });
+
+        event.getGenerator().addProvider(true, PackMetadataGenerator.forFeaturePack(event.getGenerator().getPackOutput(), Component.literal("JAGS Assets")));
     }
 }

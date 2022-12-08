@@ -1,6 +1,6 @@
 {
-  "replace": false,
   "entries": [
     "jags:grass_seed"
-  ]
+  ],
+  "replace": false
 }

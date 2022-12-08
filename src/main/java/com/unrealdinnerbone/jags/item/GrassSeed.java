@@ -5,7 +5,6 @@ import com.unrealdinnerbone.jags.data.SeedTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class GrassSeed extends Item {
 
     public GrassSeed() {
-        super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+        super(new Item.Properties());
     }
 
     @Override

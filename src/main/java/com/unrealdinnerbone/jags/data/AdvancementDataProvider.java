@@ -5,44 +5,41 @@ import com.unrealdinnerbone.jags.JAGS;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 
 public class AdvancementDataProvider extends AdvancementProvider {
 
-    public AdvancementDataProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, existingFileHelper);
+    public AdvancementDataProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper existingFileHelper) {
+        super(packOutput, provider, List.of(new AdvancementData()), existingFileHelper);
     }
 
-    @Override
-    protected void registerAdvancements(Consumer<Advancement> consumer, ExistingFileHelper fileHelper) {
-        new AdvancementData().accept(consumer);
-    }
+    public static class AdvancementData implements AdvancementSubProvider {
 
-    public static class AdvancementData implements Consumer<Consumer<Advancement>> {
 
         @Override
-        public void accept(Consumer<Advancement> consumer) {
-
+        public void generate(HolderLookup.Provider provider, Consumer<Advancement> advancementConsumer) {
             ResourceLocation background = new ResourceLocation("minecraft", "textures/gui/advancements/backgrounds/stone.png");
 
             Advancement advancement = Advancement.Builder.advancement()
                     .display(JAGS.ITEM.get(), getTranslation("title"), getTranslation("description"), background, FrameType.TASK, true, true, true)
                     .addCriterion("use_seed", new SeedTrigger.Instance(EntityPredicate.Composite.ANY))
-                    .save(consumer, JAGS.MOD_ID + ":" + JAGS.MOD_ID);
-
+                    .save(advancementConsumer, JAGS.MOD_ID + ":" + JAGS.MOD_ID);
         }
     }
 
 
     private static Component getTranslation(String key) {
-        return new TranslatableComponent("advancements." + JAGS.MOD_ID + ".root." + key);
+        return Component.translatable("advancements." + JAGS.MOD_ID + ".root." + key);
     }
 }

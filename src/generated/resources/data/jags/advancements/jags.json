@@ -1,24 +1,24 @@
 {
+  "criteria": {
+    "use_seed": {
+      "conditions": {},
+      "trigger": "jags:jags"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "jags:jags"
-    },
-    "title": {
-      "translate": "advancements.jags.root.title"
-    },
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "description": {
       "translate": "advancements.jags.root.description"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
     "hidden": true,
-    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
-  },
-  "criteria": {
-    "use_seed": {
-      "trigger": "jags:jags",
-      "conditions": {}
+    "icon": {
+      "item": "jags:jags"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.jags.root.title"
     }
   },
   "requirements": [
