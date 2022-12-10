@@ -6,3 +6,17 @@ modId = "jags"
 version = "${file.jarVersion}"
 displayName = "JAGS"
 description = "Adds a grass seed"
+
+[[dependencies.jags]]
+modId = "forge"
+mandatory = true
+versionRange = "[44.0.6,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.jags]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.3]"
+ordering = "NONE"
+side = "BOTH"

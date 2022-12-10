@@ -45,8 +45,9 @@ public class JAGS {
     }
 
     public static void itemGroupEvent(CreativeModeTabEvent.BuildContents event) {
-        event.registerSimple(CreativeModeTabs.NATURAL_BLOCKS, ITEM.get());
-        event.registerSimple(CreativeModeTabs.SEARCH, ITEM.get());
+        if(event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(ITEM.get());
+        }
     }
 
     public static void onData(GatherDataEvent event) {
