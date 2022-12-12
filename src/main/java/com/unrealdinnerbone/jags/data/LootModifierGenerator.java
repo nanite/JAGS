@@ -1,7 +1,7 @@
 package com.unrealdinnerbone.jags.data;
 
 import com.unrealdinnerbone.jags.JAGS;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -11,8 +11,8 @@ import net.minecraftforge.common.loot.LootTableIdCondition;
 
 public class LootModifierGenerator extends GlobalLootModifierProvider {
 
-    public LootModifierGenerator(DataGenerator gen) {
-        super(gen, JAGS.MOD_ID);
+    public LootModifierGenerator(PackOutput packOutput) {
+        super(packOutput, JAGS.MOD_ID);
     }
 
     @Override
