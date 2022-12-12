@@ -10,7 +10,7 @@ description = "Adds a grass seed"
 [[dependencies.jags]]
 modId = "forge"
 mandatory = true
-versionRange = "[44.0.6,)"
+versionRange = "[44.0.18,)"
 ordering = "NONE"
 side = "BOTH"
 

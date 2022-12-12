@@ -11,7 +11,6 @@ import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -20,8 +19,8 @@ import java.util.function.Consumer;
 
 public class AdvancementDataProvider extends AdvancementProvider {
 
-    public AdvancementDataProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, provider, List.of(new AdvancementData()), existingFileHelper);
+    public AdvancementDataProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider) {
+        super(packOutput, provider, List.of(new AdvancementData()));
     }
 
     public static class AdvancementData implements AdvancementSubProvider {

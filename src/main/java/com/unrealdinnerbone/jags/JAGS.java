@@ -52,7 +52,7 @@ public class JAGS {
 
     public static void onData(GatherDataEvent event) {
         event.getGenerator().addProvider(true, new LootModifierGenerator(event.getGenerator()));
-        event.getGenerator().addProvider(true, new AdvancementDataProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new AdvancementDataProvider(event.getGenerator().getPackOutput(), event.getLookupProvider()));
 
         event.getGenerator().addProvider(true, new BlockTagsProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(), JAGS.MOD_ID, event.getExistingFileHelper()) {
             @Override
