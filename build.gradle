@@ -1,25 +1,8 @@
-import net.minecraftforge.gradle.common.util.ModConfig
-
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
-}
-
 plugins {
+    id "dev.architectury.loom" version "1.1-SNAPSHOT"
+    id "maven-publish"
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
-
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-
 
 apply from: 'https://files.saps.dev/ci/git-md-changelog.gradle'
 
@@ -36,46 +19,41 @@ if(!file("src/main/resources/" + mixinJson).exists()) {
     mixinJson = null
 }
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
-minecraft {
-    mappings channel: 'official', version: project.minecraft_version
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+loom {
+    silentMojangMappingsLicense()
 
-    ModConfig projectMod = new ModConfig(project, project.getName())
-    projectMod.sources(project.sourceSets.main)
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-            mods.add(projectMod)
-            if(mixinJson) args '--mixin.config', mixinJson
+    forge {
+        if(mixinJson) {
+            mixinConfigs = [mixinJson]
         }
-
-        server {
-            workingDirectory project.file('run')
-            mods.add(projectMod)
-            if(mixinJson) args '--mixin.config', mixinJson
-        }
-
-        data {
-            workingDirectory project.file('data')
-            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            mods.add(projectMod)
-            if(mixinJson) args '--mixin.config', mixinJson
+        dataGen {
+            mod project.mod_id
         }
     }
+
+//    launches {
+//        data {
+//            arg "--existing", file("src/main/resources").absolutePath
+//        }
+//    }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+//            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
-if(mixinJson) {
-    mixin {
-        add sourceSets.main, project.mod_id + '.refmap.json'
-    }
+
+repositories {
+    maven { url = 'https://maven.parchmentmc.org' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:' + project.minecraft_version + '-' + project.forge_version
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    mappings loom.layered() {
+        officialMojangMappings()
+//        parchment("org.parchmentmc.data:parchment-1.19.3:2022.12.18@zip")
+    }
+
+    forge 'net.minecraftforge:forge:' + project.minecraft_version + '-' + project.forge_version
 }
 
 jar {
@@ -93,26 +71,27 @@ jar {
     }
 }
 
-jar.finalizedBy('reobfJar')
 
-task sourcesJar(type: Jar) {
-    classifier = "sources"
-    from sourceSets.main.allJava
+processResources {
+    inputs.property "version", project.version
 }
 
-artifacts {
-    archives sourcesJar
+
+java {
+    withSourcesJar()
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId = archivesBaseName
-            artifact(jar) {
-                classifier null
+            artifact (remapSourcesJar) {
+                classifier = "sources"
+                builtBy remapSourcesJar
             }
-            artifact(sourcesJar) {
-                builtBy sourcesJar
+
+            artifact(remapJar) {
+                builtBy remapJar
             }
         }
     }
@@ -121,7 +100,7 @@ publishing {
     repositories {
         if (ENV.NANITE_DEPLOY) {
             maven {
-                url "https://maven.nanite.dev/"
+                url "https://maven.nanite.dev/releases"
                 credentials {
                     username = "nanite"
                     password = "${ENV.NANITE_DEPLOY}"
@@ -139,7 +118,7 @@ if (ENV.CURSE_DEPLOY) {
             releaseType = project.release_type
             addGameVersion "Forge"
             addGameVersion project.minecraft_version
-            mainArtifact(jar)
+            mainArtifact(remapJar.archiveFile)
             changelog = getGitChangelog()
             changelogType = 'markdown'
         }
