@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "jags",
+  "version": "${version}",
+
+  "name": "JAGS",
+  "description": "Adds a simple grass seed",
+  "authors": [
+    "UnRealDinnerbone"
+  ],
+  "contact": {
+    "homepage": "https://legacy.curseforge.com/minecraft/mc-mods/jags",
+    "sources": "https://github.com/nanite/jags",
+    "issues": "https://github.com/nanite/jags/issues"
+  },
+
+  "license": "All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks",
+  "icon": "assets/mymod/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.unrealdinnerbone.jags.JAGSFabric"
+    ],
+    "fabric-datagen": [
+      "com.unrealdinnerbone.jags.data.JAGSFabricData"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=17"
+  }
+}
+  

@@ -1,0 +1,17 @@
+{
+  "type": "trenzalore:add",
+  "conditions": [
+    {
+      "chance": 0.1,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:blocks/grass"
+    }
+  ],
+  "stack": {
+    "Count": 1,
+    "id": "jags:grass_seed"
+  }
+}
