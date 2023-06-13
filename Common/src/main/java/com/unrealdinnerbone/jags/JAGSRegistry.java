@@ -21,7 +21,7 @@ import java.util.List;
 public class JAGSRegistry implements IRegistry {
 
     private static final RegistryObjects<Item> ITEMS = RegistryFactory.create(Registries.ITEM);
-    public static final RegistryEntry<Item> GRASS_SEED = ITEMS.register("grass_seed", GrassSeed::new);
+    public static final RegistryEntry<GrassSeed> GRASS_SEED = ITEMS.register("grass_seed", GrassSeed::new);
 
     public static final TagKey<Block> DIRT = TagKey.create(Registries.BLOCK, new ResourceLocation(JAGS.MOD_ID, "dirt"));
     public static final TagKey<Item> GRASS_SEED_TAG = TagKey.create(Registries.ITEM, new ResourceLocation(JAGS.MOD_ID, "grass_seed"));
