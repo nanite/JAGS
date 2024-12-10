@@ -2,7 +2,7 @@ package com.unrealdinnerbone.jags.events;
 
 import com.unrealdinnerbone.jags.JAGSRegistry;
 import com.unrealdinnerbone.trenzalore.lib.RLUtils;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -13,10 +13,11 @@ import java.util.List;
 public class LootEvents {
 
     private static final List<ResourceLocation> GRASS_BLOCKS = List.of(
-            RLUtils.rl("minecraft", "blocks/grass"),
+            RLUtils.rl("minecraft", "blocks/short_grass"),
             RLUtils.rl("minecraft", "blocks/tall_grass"));
+
     public static void init() {
-        LootTableEvents.MODIFY.register((key, tableBuilder, source) -> {
+        LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             if(GRASS_BLOCKS.contains(key.location())) {
                 LootPool poolBuilder = LootPool.lootPool()
                         .when(LootItemRandomChanceCondition.randomChance(0.1f))

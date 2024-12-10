@@ -1,12 +1,11 @@
-package com.unrealdinnerbone.jags.data;
+package com.unrealdinnerbone.jags.client;
 
 import com.unrealdinnerbone.jags.JAGS;
+import com.unrealdinnerbone.jags.data.LangProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.Nullable;
 
 public class JAGSFabricData implements DataGeneratorEntrypoint {
     @Override
@@ -15,15 +14,5 @@ public class JAGSFabricData implements DataGeneratorEntrypoint {
         pack.addProvider(JAGSModelProvider::new);
         pack.addProvider(LangProvider::new);
         pack.addProvider((output, registriesFuture) -> PackMetadataGenerator.forFeaturePack(output, Component.literal(JAGS.MOD_ID)));
-    }
-
-    @Override
-    public @Nullable String getEffectiveModId() {
-        return DataGeneratorEntrypoint.super.getEffectiveModId();
-    }
-
-    @Override
-    public void buildRegistry(RegistrySetBuilder registryBuilder) {
-        DataGeneratorEntrypoint.super.buildRegistry(registryBuilder);
     }
 }

@@ -23,7 +23,7 @@
       "com.unrealdinnerbone.jags.JAGSFabric"
     ],
     "fabric-datagen": [
-      "com.unrealdinnerbone.jags.data.JAGSFabricData"
+      "com.unrealdinnerbone.jags.client.JAGSFabricData"
     ]
   },
   "depends": {

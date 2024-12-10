@@ -7,7 +7,7 @@
     },
     {
       "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:blocks/short_grass"
+      "loot_table_id": "minecraft:blocks/tall_grass"
     }
   ],
   "table": {

@@ -13,7 +13,7 @@ public class JAGSNeo {
         eventBus.addListener(JAGSNeo::onData);
     }
 
-    private static void onData(GatherDataEvent event) {
+    private static void onData(GatherDataEvent.Server event) {
         event.getGenerator().addProvider(true, new LootModifierGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
     }
 }

@@ -8,7 +8,10 @@ multiLoader.neo() {
 
 publishing.publications.mavenJava.from components.java
 
-sourceSets.main.resources { srcDir project(":common").file('src/generated/resources') }
+sourceSets.main.resources {
+    srcDir project(":common").file('src/generated/resources')
+    srcDir project(":neo").file('src/generated/resources')
+}
 
 dependencies {
     implementation("com.unrealdinnerbone:trenzalore-neo:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
