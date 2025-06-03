@@ -24,6 +24,9 @@
     ],
     "fabric-datagen": [
       "com.unrealdinnerbone.jags.data.JAGSFabricData"
+    ],
+    "client": [
+      "com.unrealdinnerbone.jags.client.JAGSClient"
     ]
   },
   "depends": {

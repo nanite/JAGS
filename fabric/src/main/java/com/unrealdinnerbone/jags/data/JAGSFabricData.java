@@ -9,11 +9,13 @@ import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
 public class JAGSFabricData implements DataGeneratorEntrypoint {
+
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(JAGSModelProvider::new);
         pack.addProvider(LangProvider::new);
+        pack.addProvider(LootTableGen::new);
         pack.addProvider((output, registriesFuture) -> PackMetadataGenerator.forFeaturePack(output, Component.literal(JAGS.MOD_ID)));
     }
 

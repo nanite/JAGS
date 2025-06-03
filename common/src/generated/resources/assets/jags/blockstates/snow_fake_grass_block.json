@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "jags:block/snow_fake_grass_block"
+    }
+  }
+}
