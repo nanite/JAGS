@@ -16,6 +16,7 @@ public class JAGSFabricData implements DataGeneratorEntrypoint {
         pack.addProvider(JAGSModelProvider::new);
         pack.addProvider(LangProvider::new);
         pack.addProvider(LootTableGen::new);
+        pack.addProvider(JAGSTags::new);
         pack.addProvider((output, registriesFuture) -> PackMetadataGenerator.forFeaturePack(output, Component.literal(JAGS.MOD_ID)));
     }
 
