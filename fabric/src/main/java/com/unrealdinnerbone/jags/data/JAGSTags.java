@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class JAGSTags extends FabricTagProvider.BlockTagProvider {
 
-    private final TagKey<Block> FAKE_GRASS =  TagKey.create(Registries.BLOCK, JAGS.rl("fake_grass"));
 
     public JAGSTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
@@ -29,10 +28,10 @@ public class JAGSTags extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
         JAGSRegistry.FAKE_GRASS_BLOCKS.forEach((fakeGrassType, registryEntry) -> {
-            this.getOrCreateTagBuilder(FAKE_GRASS)
+            this.getOrCreateTagBuilder(JAGSRegistry.FAKE_GRASS)
                     .add(registryEntry.get());
         });
-        this.getOrCreateTagBuilder(FAKE_GRASS)
+        this.getOrCreateTagBuilder(JAGSRegistry.FAKE_GRASS)
                 .add(JAGSRegistry.FAKE_GRASS_BLOCK.get());
         List<TagKey<Block>> tags = List.of(
                 BlockTags.BAMBOO_PLANTABLE_ON,
@@ -43,7 +42,7 @@ public class JAGSTags extends FabricTagProvider.BlockTagProvider {
         );
         for (TagKey<Block> tag : tags) {
             this.getOrCreateTagBuilder(tag)
-                    .addTag(FAKE_GRASS);
+                    .addTag(JAGSRegistry.FAKE_GRASS);
         }
     }
 }

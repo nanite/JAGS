@@ -8,6 +8,7 @@ import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
 import com.unrealdinnerbone.trenzalore.lib.CreativeTabs;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 public class JAGSRegistry implements IRegistry {
+
+    public static final TagKey<Block> FAKE_GRASS =  TagKey.create(Registries.BLOCK, JAGS.rl("fake_grass"));
+
 
     private static final RegistryObjects<Item> ITEMS = Regeneration.create(Registries.ITEM);
     private static final RegistryObjects<Block> BLOCKS = Regeneration.create(Registries.BLOCK);
