@@ -1,3 +1,3 @@
-### 21.0.4
+### 21.0.5
 
-- Fix Block Tags for Fake Grass Block
+- Fix Block Tinting
