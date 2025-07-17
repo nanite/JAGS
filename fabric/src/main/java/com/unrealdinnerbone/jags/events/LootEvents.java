@@ -13,7 +13,7 @@ import java.util.List;
 public class LootEvents {
 
     private static final List<ResourceLocation> GRASS_BLOCKS = List.of(
-            RLUtils.rl("minecraft", "blocks/grass"),
+            RLUtils.rl("minecraft", "blocks/short_grass"),
             RLUtils.rl("minecraft", "blocks/tall_grass"));
     public static void init() {
         LootTableEvents.MODIFY.register((key, tableBuilder, source) -> {
