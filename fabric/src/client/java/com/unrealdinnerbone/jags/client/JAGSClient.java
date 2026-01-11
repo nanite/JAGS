@@ -2,10 +2,10 @@ package com.unrealdinnerbone.jags.client;
 
 import com.unrealdinnerbone.jags.JAGSRegistry;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.world.level.GrassColor;
 
 public class JAGSClient implements ClientModInitializer {
@@ -14,7 +14,7 @@ public class JAGSClient implements ClientModInitializer {
     public void onInitializeClient() {
         JAGSRegistry.FAKE_GRASS_BLOCKS.forEach((type, entry) -> {
             ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> type.getHex(), entry.get());
-            BlockRenderLayerMap.INSTANCE.putBlock(entry.get(), RenderType.cutoutMipped());
+            BlockRenderLayerMap.putBlock(entry.get(), ChunkSectionLayer.CUTOUT);
         });
 
         ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> {
@@ -25,15 +25,16 @@ public class JAGSClient implements ClientModInitializer {
             }
         }, JAGSRegistry.FAKE_GRASS_BLOCK.get());
 
-        JAGSRegistry.FAKE_GRASS_BLOCK_ITEMS.forEach((type, entry) -> {
-            ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
-                if (tintIndex == 0) {
-                    return type.getHex();
-                }
-                return -1; // Default color
-            }, entry.get());
-        });
+        // Todo fix fake grass block item coloring
+//        JAGSRegistry.FAKE_GRASS_BLOCK_ITEMS.forEach((type, entry) -> {
+//            ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
+//                if (tintIndex == 0) {
+//                    return type.getHex();
+//                }
+//                return -1; // Default color
+//            }, entry.get());
+//        });
 
-        BlockRenderLayerMap.INSTANCE.putBlock(JAGSRegistry.FAKE_GRASS_BLOCK.get(), RenderType.cutoutMipped());
+        BlockRenderLayerMap.putBlock(JAGSRegistry.FAKE_GRASS_BLOCK.get(), ChunkSectionLayer.CUTOUT);
     }
 }

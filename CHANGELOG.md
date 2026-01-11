@@ -1,3 +1,3 @@
-### 21.0.5
+### 21.11.0
 
-- Fix Block Tinting
+- Update to Minecraft 1.21.11

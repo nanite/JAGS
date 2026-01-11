@@ -1,6 +1,5 @@
 package com.unrealdinnerbone.jags.item;
 
-import com.unrealdinnerbone.jags.JAGSRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
@@ -11,8 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class GrassSeed extends Item {
 
-    public GrassSeed() {
-        super(new Properties());
+    public GrassSeed(Item.Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -24,11 +23,7 @@ public class GrassSeed extends Item {
             if (!context.getPlayer().getAbilities().instabuild) {
                 context.getItemInHand().shrink(1);
             }
-//            if(context.getPlayer() instanceof ServerPlayer serverPlayer) {
-//                JAGSRegistry.INSTANCE.trigger(serverPlayer);
-//            }
-
-            return InteractionResult.sidedSuccess(context.getLevel().isClientSide());
+            return InteractionResult.SUCCESS_SERVER;
         }else {
             return super.useOn(context);
         }

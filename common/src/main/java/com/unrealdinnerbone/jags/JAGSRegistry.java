@@ -2,7 +2,11 @@ package com.unrealdinnerbone.jags;
 
 import com.unrealdinnerbone.jags.block.FakeGrassBlock;
 import com.unrealdinnerbone.jags.item.GrassSeed;
+import com.unrealdinnerbone.trenzalore.api.platform.services.ICreativeTabRegister;
 import com.unrealdinnerbone.trenzalore.api.platform.services.IRegistry;
+import com.unrealdinnerbone.trenzalore.api.registry.AbstractRegistryObjects;
+import com.unrealdinnerbone.trenzalore.api.registry.BlockRegistryObjects;
+import com.unrealdinnerbone.trenzalore.api.registry.ItemRegistryObjects;
 import com.unrealdinnerbone.trenzalore.api.registry.Regeneration;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryObjects;
@@ -26,45 +30,44 @@ public class JAGSRegistry implements IRegistry {
     public static final TagKey<Block> FAKE_GRASS =  TagKey.create(Registries.BLOCK, JAGS.rl("fake_grass"));
 
 
-    private static final RegistryObjects<Item> ITEMS = Regeneration.create(Registries.ITEM);
-    private static final RegistryObjects<Block> BLOCKS = Regeneration.create(Registries.BLOCK);
+    private static final ItemRegistryObjects ITEMS = Regeneration.createItemRegistry(JAGS.MOD_ID);
+    private static final BlockRegistryObjects BLOCKS = Regeneration.createBlockRegistry(JAGS.MOD_ID);
 
-    public static final RegistryEntry<GrassSeed> GRASS_SEED = ITEMS.register("grass_seed", GrassSeed::new);
+    public static final RegistryEntry.ItemEntry<GrassSeed> GRASS_SEED = ITEMS.register("grass_seed", GrassSeed::new, properties -> properties);
 
-    public static final RegistryEntry<Block> FAKE_GRASS_BLOCK = BLOCKS.register("fake_grass_block", () -> new FakeGrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
-    public static final RegistryEntry<Item> FAKE_GRASS_BLOCK_ITEM = ITEMS.register("fake_grass_block", () -> new BlockItem(FAKE_GRASS_BLOCK.get(), new Item.Properties()));
+    public static final RegistryEntry.BlockEntry<Block> FAKE_GRASS_BLOCK = BLOCKS.register("fake_grass_block", FakeGrassBlock::new, properties -> properties.mapColor(MapColor.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS));
+    public static final RegistryEntry.ItemEntry<BlockItem> FAKE_GRASS_BLOCK_ITEM = ITEMS.registerBlockItem("fake_grass_block", FAKE_GRASS_BLOCK, properties -> properties);
 
-    public static final Map<FakeGrassType, RegistryEntry<FakeGrassBlock>> FAKE_GRASS_BLOCKS = new HashMap<>();
-    public static final Map<FakeGrassType, RegistryEntry<Item>> FAKE_GRASS_BLOCK_ITEMS = new HashMap<>();
+    public static final Map<FakeGrassType, RegistryEntry.BlockEntry<FakeGrassBlock>> FAKE_GRASS_BLOCKS = new HashMap<>();
+    public static final Map<FakeGrassType, RegistryEntry.ItemEntry<Item>> FAKE_GRASS_BLOCK_ITEMS = new HashMap<>();
 
     static {
         for (FakeGrassType value : FakeGrassType.values()) {
-            RegistryEntry<FakeGrassBlock> register = BLOCKS.register(value.name().toLowerCase() + "_fake_grass_block", () -> new FakeGrassBlock(Block.Properties.of().mapColor(MapColor.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
+            RegistryEntry.BlockEntry<FakeGrassBlock> register = BLOCKS.register(value.name().toLowerCase() + "_fake_grass_block", FakeGrassBlock::new, properties -> properties.mapColor(MapColor.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS));
             FAKE_GRASS_BLOCKS.put(value, register);
         }
         for (FakeGrassType value : FakeGrassType.values()) {
-            RegistryEntry<Item> item = ITEMS.register(value.name().toLowerCase() + "_fake_grass_block", () -> new BlockItem(FAKE_GRASS_BLOCKS.get(value).get(), new Item.Properties()));
+            RegistryEntry.ItemEntry<Item> item = ITEMS.register(value.name().toLowerCase() + "_fake_grass_block", (prop) -> new BlockItem(FAKE_GRASS_BLOCKS.get(value).get(), prop), properties -> properties);
             FAKE_GRASS_BLOCK_ITEMS.put(value, item);
         }
     }
 
     @Override
-    public void afterRegistered() {
-        Regeneration.addItemsToCreateTab(CreativeTabs.TOOLS_AND_UTILITIES, List.of(GRASS_SEED));
-        Regeneration.addItemsToCreateTab(CreativeTabs.BUILDING_BLOCKS, List.of(FAKE_GRASS_BLOCK_ITEM));
-        FAKE_GRASS_BLOCK_ITEMS.forEach((type, entry) -> Regeneration.addItemsToCreateTab(CreativeTabs.BUILDING_BLOCKS, List.of(entry)));
+    public void afterRegistered(ICreativeTabRegister creativeTabRegister) {
+        creativeTabRegister.addItemToCreativeTab(creativeTabRegister.tabs().toolsAndUtilities(), GRASS_SEED);
+        creativeTabRegister.addItemToCreativeTab(creativeTabRegister.tabs().buildingBlocks(), FAKE_GRASS_BLOCK_ITEM);
+        FAKE_GRASS_BLOCK_ITEMS.forEach((type, entry) -> creativeTabRegister.addItemToCreativeTab(creativeTabRegister.tabs().buildingBlocks(), entry));
     }
 
     @Override
-    public List<RegistryObjects<?>> getRegistryObjects() {
-        return Arrays.asList(ITEMS, BLOCKS);
+    public List<AbstractRegistryObjects<?>> getRegistryObjects() {
+        return Arrays.asList(BLOCKS, ITEMS);
     }
 
     @Override
     public String getModID() {
         return JAGS.MOD_ID;
     }
-
 
     public enum FakeGrassType {
         BADLANDS("#90814D"),

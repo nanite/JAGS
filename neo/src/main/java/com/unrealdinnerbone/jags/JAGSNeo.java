@@ -18,7 +18,7 @@ public class JAGSNeo {
         NeoForge.EVENT_BUS.addListener(JAGSNeo::onHoe);
     }
 
-    private static void onData(GatherDataEvent event) {
+    private static void onData(GatherDataEvent.Client event) {
         event.getGenerator().addProvider(true, new LootModifierGenerator(event.getGenerator().getPackOutput(), event.getLookupProvider()));
     }
 

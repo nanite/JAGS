@@ -1,7 +1,5 @@
 package com.unrealdinnerbone.jags;
 
-import org.jetbrains.annotations.NotNull;
-
 public interface SimpleColor {
 
     SimpleColor WHITE = fromRGB(255, 255, 255);
@@ -19,12 +17,10 @@ public interface SimpleColor {
     SimpleColor DARK_GRAY = fromRGB(64, 64, 64);
     SimpleColor BROWN = fromRGB(165, 42, 42);
     
-    @NotNull
     static SimpleColor fromRGB(int red, int green, int blue) {
         return new RGB(red, green, blue);
     }
 
-    @NotNull
     static SimpleColor fromHex(String hex) {
         if(hex == null) {
             throw new IllegalArgumentException("Hex cannot be null");

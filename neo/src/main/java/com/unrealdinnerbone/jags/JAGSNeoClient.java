@@ -20,11 +20,11 @@ public class JAGSNeoClient {
 
     }
 
-    @SubscribeEvent
-    public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
-        JAGSRegistry.FAKE_GRASS_BLOCK_ITEMS.forEach((type, entry) -> {
-            event.register((stack, tintIndex) -> type.getHex(), entry.get());
-        });
-
-    }
+//    @SubscribeEvent
+//    public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
+//        JAGSRegistry.FAKE_GRASS_BLOCK_ITEMS.forEach((type, entry) -> {
+//            event.register((stack, tintIndex) -> type.getHex(), entry.get());
+//        });
+//
+//    }
 }

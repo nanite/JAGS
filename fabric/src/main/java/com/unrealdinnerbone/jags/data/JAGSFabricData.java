@@ -13,7 +13,6 @@ public class JAGSFabricData implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
-        pack.addProvider(JAGSModelProvider::new);
         pack.addProvider(LangProvider::new);
         pack.addProvider(LootTableGen::new);
         pack.addProvider(JAGSTags::new);
