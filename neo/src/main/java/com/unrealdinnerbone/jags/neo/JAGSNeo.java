@@ -1,6 +1,8 @@
-package com.unrealdinnerbone.jags;
+package com.unrealdinnerbone.jags.neo;
 
-import com.unrealdinnerbone.jags.data.LootModifierGenerator;
+import com.unrealdinnerbone.jags.JAGS;
+import com.unrealdinnerbone.jags.JAGSRegistry;
+import com.unrealdinnerbone.jags.neo.data.LootModifierGenerator;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;

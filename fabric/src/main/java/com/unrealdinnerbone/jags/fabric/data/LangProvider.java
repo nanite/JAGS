@@ -1,9 +1,8 @@
-package com.unrealdinnerbone.jags.data;
+package com.unrealdinnerbone.jags.fabric.data;
 
 import com.unrealdinnerbone.jags.JAGSRegistry;
-import com.unrealdinnerbone.jags.block.FakeGrassBlock;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Item;
@@ -13,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class LangProvider extends FabricLanguageProvider {
 
-    protected LangProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    protected LangProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
 

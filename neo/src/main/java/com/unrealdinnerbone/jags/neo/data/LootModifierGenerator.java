@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.jags.data;
+package com.unrealdinnerbone.jags.neo.data;
 
 import com.unrealdinnerbone.jags.JAGS;
 import com.unrealdinnerbone.jags.JAGSRegistry;
@@ -24,7 +24,7 @@ public class LootModifierGenerator extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         add("grass_seed", new AddItemModifier(
-                createChanceCondition(0.1f, RLUtils.rl("minecraft", "blocks/short_grass")), new ItemStack(JAGSRegistry.GRASS_SEED.get())));
+                createChanceCondition(0.1f, IDUtils.id("minecraft", "blocks/short_grass")), new ItemStack(JAGSRegistry.GRASS_SEED.get())));
     }
 
     public static LootItemCondition[] createChanceCondition(float chance, Identifier table) {

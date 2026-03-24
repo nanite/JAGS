@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.jags.data;
+package com.unrealdinnerbone.jags.fabric.data;
 
 import com.unrealdinnerbone.jags.JAGS;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;

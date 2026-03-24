@@ -1,6 +1,7 @@
-package com.unrealdinnerbone.jags;
+package com.unrealdinnerbone.jags.fabric;
 
-import com.unrealdinnerbone.jags.events.LootEvents;
+import com.unrealdinnerbone.jags.JAGS;
+import com.unrealdinnerbone.jags.fabric.events.LootEvents;
 import net.fabricmc.api.ModInitializer;
 
 public class JAGSFabric implements ModInitializer {

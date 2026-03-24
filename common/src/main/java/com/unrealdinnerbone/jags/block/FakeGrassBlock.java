@@ -23,7 +23,7 @@ public class FakeGrassBlock extends Block {
        if (blockState2.getFluidState().getAmount() == 8) {
             return false;
         } else {
-           int i = LightEngine.getLightBlockInto(blockState, blockState2, Direction.UP, blockState2.getLightBlock());
+           int i = LightEngine.getLightBlockInto(blockState, blockState2, Direction.UP, blockState2.getLightEmission());
            return i < LightEngine.MAX_LEVEL;
         }
     }

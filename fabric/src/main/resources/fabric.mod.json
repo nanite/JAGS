@@ -20,20 +20,19 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.unrealdinnerbone.jags.JAGSFabric"
+      "com.unrealdinnerbone.jags.fabric.JAGSFabric"
     ],
     "fabric-datagen": [
       "com.unrealdinnerbone.jags.data.JAGSFabricData"
     ],
     "client": [
-      "com.unrealdinnerbone.jags.client.JAGSClient"
+      "com.unrealdinnerbone.jags.fabric.client.JAGSClient"
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14",
+    "fabric-api": "*",
     "minecraft": "${minecraft_version}",
-    "java": ">=17",
-    "trenzalore": ">=${trenzalore_version}"
+    "java": ">=25"
   }
 }
   
