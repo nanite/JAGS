@@ -9,4 +9,5 @@ public record GrassTintSource(int hex) implements BlockTintSource {
     public int color(BlockState state) {
         return hex;
     }
+
 }
