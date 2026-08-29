@@ -9,19 +9,19 @@ logoFile="assets/jags/logo.png"
 credits=""
 authors="UnRealDinnerbone"
 description="Adds a grass seed."
-[[dependencies.javd]]
+[[dependencies.jags]]
 modId = "neoforge"
 required = true
 versionRange = "[1.0,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.javd]]
+[[dependencies.jags]]
 modId = "minecraft"
 required = true
 versionRange = "[${minecraft_version}]"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.javd]]
+[[dependencies.jags]]
 modId = "trenzalore"
 required = true
 versionRange = "[${trenzalore_version},)"
